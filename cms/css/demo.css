@@ -1,0 +1,188 @@
+		.rightDiv_content .one:after{
+			clear: both;
+			content: "";
+			display: table;
+		}
+		.rightDiv_content .one .con-r-left:after{
+			clear: both;
+			content: "";
+			display: table;
+		}
+		.rightDiv_content .one .con-r-left .con-r-left-1:after{
+			clear: both;
+			content: "";
+			display: table;
+		}
+		.rightDiv_content .one .con-r-left .con-r-left-1{
+			width: 178px;
+			height: 225px;
+			float: left;
+		}
+		.rightDiv_content .one .con-r-left .con-r-left-1 .imgs{
+			width:178px;
+			height: 65px;
+			margin-bottom: 15px;
+			padding: 10px;
+			background-color: white; 
+		}
+		.rightDiv_content .one .con-r-left .con-r-left-1 .imgs:last-child{
+			margin-bottom: 0px;
+		}
+		.rightDiv_content .one .con-r-left .con-r-left-1 .imgs img{
+			width: 40px;
+			height: 40px;
+
+		}
+		.rightDiv_content .one .con-r-left .con-r-left-1 .imgs p{
+			 display: inline-block;
+			 margin-left: 10px;
+		}
+		.rightDiv_content .one .con-r-left .con-r-left-1 .imgs span.num{
+			/*display: inline-block;*/
+			font-size: 20px;
+			font-weight: bolder;
+		}
+		.rightDiv_content .one .con-r-left .con-r-left-1 .imgs span.zimu{
+			/*display: inline-block;*/
+			position: absolute;
+
+			font-size: 8px;
+			color: #ccc;
+		}
+		.rightDiv_content .one .con-r-left .zhexian{
+			width: 380px;
+			height: 225px;
+			float: left;
+			margin-left: 22px;
+			background-color: white;
+		}
+		.rightDiv_content .one .con-r-left .chart{
+			width: 173px;
+			float: left;
+			margin-left: 22px;
+		}
+		.rightDiv_content .one .con-r-left .chart:after{
+			clear: both;
+			content: "";
+			display: table;
+		}
+		.rightDiv_content .one .con-r-left .chart .char{
+			width: 173px;
+			height: 105px;
+			background-color: white;
+			margin-bottom: 15px;
+		}
+		.rightDiv_content .one .con-r-left .chart .char:last-child{
+			margin-bottom: 0px;
+		}
+		.rightDiv_content .one .con-r-xia{
+			width: 775px;
+			margin-top: 17px;
+		}
+		.rightDiv_content .one .con-r-xia:after{
+			clear: both;
+			content: "";
+			display: table;
+		}
+		.rightDiv_content .one .con-r-xia .bing{
+			width: 380px;
+			height:415px;
+			float: left;
+			background-color: white;
+		}
+		.rightDiv_content .one .con-r-xia .spchar{
+			width: 380px;
+			height: 415px;
+			float: left;
+			margin-left: 15px;
+		}
+		.rightDiv_content .one .con-r-xia .spchar .speed{
+			width: 380px;
+			height: 143px;
+			margin-bottom: 23px;
+			background-color: white;
+		}
+		.rightDiv_content .one .con-r-xia .spchar .speed:first-child{
+			height: 248px;
+		}
+		/*栏目管理*/
+		.rightDiv_content .two{
+			background-color: white;
+			width: 900px;
+			height: 560px;
+			border-radius: 5px;
+			padding: 15px 10px 10px 10px;
+		}
+		.rightDiv_content .two table{
+			width: 900px;
+			margin-top: 10px;
+			text-align: center;
+		}
+		/*资讯管理*/
+		.rightDiv_content .three{
+			background-color: white;
+			width: 900px;
+			/*height: 600px;*/
+			border-radius: 5px;
+			padding: 15px 10px 10px 10px;
+		}
+		.rightDiv_content .three table{
+			width: 900px;
+			margin-top: 10px;
+			text-align: center;
+		}
+		/*用户部分*/
+		.four{
+			background-color: white;
+			border-radius: 5px;
+		}
+		.four:after{
+			content: "";
+			clear: both;
+			display: table;
+		}
+		.four .btn{
+			margin-top: 15px;
+			margin-left: 10px;
+		}
+		.four .four_1{
+			margin-top: 15px;
+		}
+		.four_1 .user{
+			width: 225px;
+			height: 260px;
+			background-color: white;
+			float: left;
+			border:1px solid #ededed;
+			box-shadow: -1px -1px 1px #ededed,-1px 1px 1px #ededed,1px -1px 1px #ededed,
+			1px 1px 1px #ededed;
+			margin-left: 30px;
+			margin-bottom: 22px;
+			padding: 3px 20px 3px 20px;
+		}
+		/*.four_1 .user:first-child{
+			margin-left: 10px;
+		}*/
+		/*.four_1 .user:nth-child(4){
+			margin-left: 10px;
+		}*/
+		.four_1 .user img{
+			display:block;
+			width: 130px;
+			height: 130px;
+			margin: 0 auto;
+			border-radius: 50%;
+		}
+		.four_1 .user span{
+			height: 20px;
+			display: inline-block;
+			font-size: 12px;
+			line-height: 20px;
+			margin-top: 4px;
+		}
+		.four_1 .user .three_left{
+			width: 75px;
+		}
+		.four_1 .user .three-right{
+			width: 100px;
+		}

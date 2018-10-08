@@ -1,0 +1,193 @@
+
+<div class="four">
+	<button class="btn btn-success more">新增</button>
+
+	<div class="four_1">
+		<div class="user hidden">
+			<img >
+			<span style="display: none;"></span>
+			<span class="three_left">用户名</span>
+			<span class="three-right"></span>
+			<span class="three_left">真实姓名</span>
+			<span class="three-right"></span>
+			<span class="three_left">手机号</span>
+			<span class="three-right"></span>
+			<span class="three_left">email</span>
+			<span class="three-right"></span>
+			<span class="three_left">状态</span>
+			<input type="checkbox" name="" class="">
+		</div>
+	</div>
+</div>
+<div class="modal one">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span>添加用户信息</span>
+			</div>
+			<div class="modal-body">
+				<span class="hiddenId"></span>
+				<span>真实姓名</span>
+				<input type="text" name="" class="newname"><br>
+				<span>密码</span>
+				<input type="passwd" name="" class="newpwd"><br>
+				<span>邮箱</span>
+				<input type="text" name="" class="mail"><br>
+				<span>用户名</span>
+				<input type="text" name="" class="nickname">
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default myClose">取消</button><button class="btn-success btn submit">确认</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <div class="modal">
+	<div class="modal-dialog">
+		<div class="modal-header">
+			
+		</div>
+		<div class="modal-body">
+			<p>是否删除该用户信息</p>
+		</div>
+		<div class="modal-footer">
+			<button>确认</button>
+			<button>取消</button>
+		</div>
+	</div>
+	
+</div> -->
+<script type="text/javascript">
+	$(function(){
+		$.get("http://120.78.164.247:8099/manager/user/findAllUser",function(results){
+			var users=results.data;
+			console.log(users);
+			users.forEach(function(item){
+				var cloneDiv=$(".hidden").clone();
+				var img=$(cloneDiv.children()[0]);
+				cloneDiv.removeClass('hidden');
+				// console.log(item.userface);
+				if(item.userface){
+					img.attr('src',item.userface)
+				}else{
+					img.attr('src','./images/touxiang.png')
+				}
+				$(cloneDiv.children()[1]).text(item.id);
+				$(cloneDiv.children()[3]).text(item.username);
+				$(cloneDiv.children()[5]).text(item.nickname);
+				$(cloneDiv.children()[9]).text(item.email);
+
+				$(".four_1").append(cloneDiv);
+
+
+				//点击删除
+				cloneDiv.click(function(){
+					// alert("删除");
+					var num=$(this).children()[1].innerHTML;
+					// console.log(num);
+					var o={
+						id:num
+					}
+					$.get("http://120.78.164.247:8099/manager/user/deleteUserById",o,function(results){
+						console.log(results);
+						if(results.status==200){
+							$(".rightDiv_content").load('pages/yonghu.html')
+						}else{
+							alert("删除时失败")
+						}
+					})
+				})
+
+
+			});
+			//新增按钮
+			$(".more").click(function(){
+				$(".one").modal("show");
+			});
+			//模态框取消按钮
+			$(".myClose").click(function(){
+				$(".one").modal("hide");
+			});
+
+			//模态框确认按钮
+			$(".submit").click(function(){
+				var name=$(".nickname").val();
+				var turename=$(".newname").val();
+				var pwd=$(".newpwd").val();
+				var email=$(".mail").val();
+				$(".newname").css('border','1px solid black');
+				$(".nickname").css('border','1px solid black');
+				$(".newpwd").css('border','1px solid black');
+				$(".mail").css('border','1px solid black');
+
+
+				//表单验证
+				if(turename){
+					if(pwd){
+						if(email){
+							if(name){
+								var o={
+									nickname:name,
+									password:pwd,
+									username:turename,
+									email:email
+								}
+
+								$.post("http://120.78.164.247:8099/manager/user/saveOrUpdateUser",o,function(results){
+									if(results.status==200){
+										$(".modal").modal("hide");
+										$(".rightDiv_content").load('pages/yonghu.html');
+									}
+								});
+							}else{
+								alert("用户名不能为空")
+							}
+						}else{
+							alert("邮箱不能为空")
+						}
+					}else{
+						alert("密码不能为空")
+					}
+				}else{
+					alert("姓名不能为空")
+				}
+				
+				
+				// $(".modal").modal("hide");
+
+				
+
+			});
+			//点击图片删除
+			
+
+
+
+
+		})
+
+
+
+	})
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

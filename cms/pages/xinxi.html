@@ -1,0 +1,266 @@
+<div class="three" style="display">
+	<button class="btn btn-success add">新增</button>
+	<button class="btn btn-danger moreDelete">批量删除</button>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<td class="col-md-1">编号</td>
+				<td class="col-md-2">文章标题</td>
+				<td class="col-md-2">所属栏目背景音乐</td>
+				<td class="col-md-1">作者</td>
+				<td class="col-md-2">发布时间</td>
+				<td class="col-md-2">阅读次数</td>
+				<td class="col-md-1">操作</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="hidden">
+				<td>
+					<input type="checkbox" name="" class="myCheck">
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<i class="glyphicon glyphicon-pencil update"></i>
+					&nbsp;&nbsp;
+					<i class="glyphicon glyphicon-trash deleteById"></i>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span class="mytitle">添加资讯信息</span>
+					<span class="close myClose">&times;</span>
+				</div>
+				<div class="modal-body">
+					<form action="#">
+						<span class="hiddenId"></span>
+						<span>文章标题：</span>
+						<input type="text" class="atitle"><br>
+						<span>所属栏目背景音乐：</span>
+						<input type="text" class="music">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default myClose">取消</button>
+					<button class="btn btn-danger submit">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+
+
+		var form={
+			page:7,
+			pageSize:20
+		}
+
+
+
+		$.get("http://120.78.164.247:8099/manager/article/findArticle",form,function(results){
+			var xinxis=results.data.list;
+			console.log(xinxis);
+
+			//获取数据
+			xinxis.forEach(function(item,index){
+				var cloneTr=$(".hidden").clone().removeAttr('class');
+				cloneTr.children(":first").children(":first").val(item.id);
+				$(cloneTr.children()[1]).text(item.title);
+				$(cloneTr.children()[4]).text(item.publishtime);
+				if(item.author){
+					$(cloneTr.children()[3]).text(item.author);
+				}else{
+					$(cloneTr.children()[3]).text("佚名");
+				}
+				if(item.music){
+					$(cloneTr.children()[2]).text(item.music);
+				}else{
+					$(cloneTr.children()[2]).text("无");
+				};
+				$(cloneTr.children()[5]).text(item.readtimes);
+
+
+				$("tbody").append(cloneTr);
+
+			});
+
+			//单个删除
+			$(".deleteById").click(function(){
+				// alert("删除");
+				var id=$(this).parent().parent().children(":first").children().val();
+				// alert(id);
+				var o={
+					id:id
+				}
+				$.get("http://120.78.164.247:8099/manager/article/deleteArticleById",o,function(results){
+					if(results.status==200){
+						$(".rightDiv_content").load('pages/xinxi.html');
+					}else{
+						alert("删除失败");
+					}
+				})
+			})
+
+
+			//批量删除
+			$(".moreDelete").click(function(){
+				var ids=[];
+				$(".myCheck:checked").each(function(index,item){
+					var id=$(item).val();
+					ids.push(id);
+				});
+				if(ids.length){
+					var o={
+						ids:ids.toString()
+					}
+					$.post("http://120.78.164.247:8099/manager/article/batchDeleteArticle",o,function(results){
+						if(results.status==200){
+							$(".rightDiv_content").load('pages/xinxi.html');
+						}else{
+							alert("删除失败")
+						}
+					})
+
+
+				}else{
+					alert("请选择要删除的信息")
+				}
+			})
+			//新增
+			$(".add").click(function(){
+				$(".modal").modal('show');
+				$(".mytitle").text("添加资讯信息");
+
+				$(".atitle").val("");
+				$(".author").val("");
+				$(".music").val("");
+				$(".time").val("");
+				$(".hiddenId").text("");
+
+			})
+			//取消按钮
+			$(".myClose").click(function(){
+				$(".modal").modal('hide');
+			})
+			//确认按钮
+			$(".submit").click(function(){
+
+				var atitle=$(".atitle").val();
+				var author=$(".author").val();
+				var music=$(".music").val();
+				var time=$(".time").val();
+				var hiddenId=$(".hiddenId").text();
+
+				if(hiddenId){
+					//修改
+					if(atitle){
+						if(music){
+							var o={
+								id:hiddenId,
+								title:atitle,
+								music:music,
+								// publishtime:time,
+								liststyle:"1",
+								author:author
+							}
+							var url="http://120.78.164.247:8099/manager/article/saveOrUpdateArticle";
+							$.post(url,o,function(results){
+								if(results.status==200){
+									$(".modal").modal("hide");
+									$(".rightDiv_content").load('pages/xinxi.html')
+								}
+							})
+						}else{
+							alert("请输入内容")
+						}
+					}else{
+						alert("请输入内容")
+					}
+				}else{
+					//添加
+					if(atitle){
+						if(music){
+							var o={
+								title:atitle,
+								music:music,
+								// publishtime:time,
+								liststyle:"1",
+								author:author
+							}
+							var url="http://120.78.164.247:8099/manager/article/saveOrUpdateArticle";
+							$.post(url,o,function(results){
+								if(results.status==200){
+									$(".modal").modal("hide");
+									$(".rightDiv_content").load('pages/xinxi.html')
+								}
+							})
+						}else{
+							alert("请输入背景音乐")
+						}
+					}else{
+						alert("请输入文章标题")
+					}
+				}
+				
+
+			})
+
+			//修改按钮
+			$(".update").click(function(){
+				$(".modal").modal("show");
+				$(".mytitle").text("修改资讯信息");
+				var atitle=$(this).parent().parent().children()[1].innerHTML;
+				var music=$(this).parent().parent().children()[2].innerHTML;
+				var hiddenId=$(this).parent().parent().children(":first").children().val();
+				// console.log(hiddenId);
+				// console.log(atitle);
+				$(".hiddenId").text(hiddenId);
+
+
+
+				$(".atitle").val(atitle);
+				$(".music").val(music);
+			})
+		})
+
+	})
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
